@@ -24,9 +24,9 @@ public class ReliableCacheConfiguration {
      * Gets the Reliable Cache Provider
      * @return returns new ReliableCacheProvider instance
      */
-    public ReliableCacheProvider cachingProvider() { 
+	public ReliableCacheProvider cachingProvider() { 
         return new ReliableCacheProvider(); 
-    } 
+    }
     
     /**
      * Bean to define Reliable Cache Manager. 
@@ -37,6 +37,6 @@ public class ReliableCacheConfiguration {
     public CacheManager cacheManager() { 
         final ReliableCacheManager cacheManager = new ReliableCacheManager(cachingProvider().getCacheManager());
         return cacheManager; 
-    } 
+    }
 
 }
