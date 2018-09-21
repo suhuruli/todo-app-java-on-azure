@@ -6,6 +6,7 @@
 package com.microsoft.azure.sample.config;
 
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,15 +17,16 @@ import microsoft.servicefabric.data.reliablecollections.jsr107.provider.Reliable
  * Configuration to enable caching through Reliable Cache Manager.
  */
 @Configuration
+@EnableCaching
 public class ReliableCacheConfiguration {
 
     /**
      * Gets the Reliable Cache Provider
      * @return returns new ReliableCacheProvider instance
      */
-    public ReliableCacheProvider cachingProvider() { 
+	public ReliableCacheProvider cachingProvider() { 
         return new ReliableCacheProvider(); 
-    } 
+    }
     
     /**
      * Bean to define Reliable Cache Manager. 
@@ -35,6 +37,6 @@ public class ReliableCacheConfiguration {
     public CacheManager cacheManager() { 
         final ReliableCacheManager cacheManager = new ReliableCacheManager(cachingProvider().getCacheManager());
         return cacheManager; 
-    } 
+    }
 
 }
