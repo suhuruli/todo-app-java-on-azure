@@ -1,0 +1,82 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "defaultValue": "SouthCentralUS",
+      "type": "String",
+      "metadata": {
+        "description": "Location of the resources."
+      }
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2018-09-01-preview",
+      "name": "TodoAppNetwork",
+      "type": "Microsoft.ServiceFabricMesh/networks",
+      "location": "[parameters('location')]",
+      "dependsOn": [],
+      "properties": {
+        "description": "This network has no description",
+        "addressPrefix": "10.0.0.4/22",
+        "ingressConfig": {
+          "layer4": [
+            {
+              "name": "TodoAppSvcListener",
+              "publicPort": "80",
+              "applicationName": "TodoApp",
+              "serviceName": "TodoAppSvc",
+              "endpointName": "TodoAppSvcListener"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "apiVersion": "2018-09-01-preview",
+      "name": "TodoApp",
+      "type": "Microsoft.ServiceFabricMesh/applications",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "Microsoft.ServiceFabricMesh/networks/TodoAppNetwork"
+      ],
+      "properties": {
+        "description": "This application has no description",
+        "services": [
+          {
+            "name": "TodoAppSvc",
+            "properties": {
+              "description": "This service has no description",
+              "osType": "Linux",
+              "codePackages": [
+                {
+                  "name": "TodoAppSvcCodePackage",
+                  "image": "suhuruli/todo-app-java-on-azure:1.0-SNAPSHOT-MAVEN",
+                  "endpoints": [
+                    {
+                      "name": "TodoAppSvcListener",
+                      "port": 80
+                    }
+                  ],
+                  "resources": {
+                    "requests": {
+                      "cpu": 0.5,
+                      "memoryInGB": 2.0
+                    }
+                  }
+                }
+              ],
+              "replicaCount": 1,
+              "networkRefs": [
+                {
+                  "name": "[resourceId('Microsoft.ServiceFabricMesh/networks', 'TodoAppNetwork')]"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

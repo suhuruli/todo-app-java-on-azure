@@ -1,0 +1,22 @@
+application:
+  schemaVersion: 1.0.0-preview2
+  name: TodoApp
+  properties:  
+    services:
+      - name: TodoAppSvc
+        properties:
+          description: This service has no description
+          osType: Linux
+          codePackages:
+           - name: TodoAppSvcCodePackage
+             image: suhuruli/todo-app-java-on-azure:1.0-SNAPSHOT-MAVEN
+             endpoints:
+                - name: TodoAppSvcListener
+                  port: 80
+             resources:
+                requests:
+                  cpu: 0.5
+                  memoryInGB: 2.0
+          replicaCount: 1
+          networkRefs:
+            - name: TodoAppNetwork
