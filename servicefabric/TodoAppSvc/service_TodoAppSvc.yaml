@@ -12,7 +12,7 @@ application:
              image: suhuruli/todo-app-java-on-azure:1.0-SNAPSHOT-MAVEN
              endpoints:
                 - name: TodoAppSvcListener
-                  port: 80
+                  port: 8080
              resources:
                 requests:
                   cpu: 0.5
