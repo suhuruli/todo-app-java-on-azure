@@ -1,5 +1,5 @@
 network:
-  schemaVersion: 1.0.0
+  schemaVersion: 1.0.0-preview2
   name: TodoAppNetwork
   properties:
     description: This network has no description
@@ -7,7 +7,7 @@ network:
     ingressConfig:
       layer4:
         - name: TodoAppSvcListener
-          publicPort: 80
+          publicPort: 8080
           applicationName: TodoApp
           serviceName: TodoAppSvc
           endpointName: TodoAppSvcListener
