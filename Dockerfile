@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 
+EXPOSE 8080
+
 RUN apt update
 RUN apt install -y openssh-server curl libc++1 cifs-utils
 RUN apt install -y libssh2-1 libunwind8 libib-util

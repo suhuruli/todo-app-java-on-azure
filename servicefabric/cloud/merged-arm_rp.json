@@ -24,7 +24,7 @@
           "layer4": [
             {
               "name": "TodoAppSvcListener",
-              "publicPort": "80",
+              "publicPort": "8080",
               "applicationName": "TodoApp",
               "serviceName": "TodoAppSvc",
               "endpointName": "TodoAppSvcListener"
@@ -52,7 +52,7 @@
               "codePackages": [
                 {
                   "name": "TodoAppSvcCodePackage",
-                  "image": "suhuruli/todo-app-java-on-azure:1.0-SNAPSHOT-RC-DEMO-1",
+                  "image": "suhuruli/todo-app-java-on-azure:1.0-SNAPSHOT",
                   "reliableCollectionsRefs": [
                     {
                       "name": "TestReliableCollections",
@@ -62,7 +62,7 @@
                   "endpoints": [
                     {
                       "name": "TodoAppSvcListener",
-                      "port": 80
+                      "port": 8080
                     }
                   ],
                   "resources": {
