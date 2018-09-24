@@ -9,7 +9,7 @@ application:
           osType: Linux
           codePackages:
            - name: TodoAppSvcCodePackage
-             image: suhuruli/todo-app-java-on-azure:1.0-SNAPSHOT
+             image: suhuruli/todo-app-java-on-azure:1.0-SNAPSHOT-RC-DEMO
              reliableCollectionsRefs:
               - name: TestReliableCollections
                 doNotPersistState: True
