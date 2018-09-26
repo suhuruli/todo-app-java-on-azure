@@ -1,5 +1,5 @@
 application:
-  schemaVersion: 1.0.0
+  schemaVersion: 1.0.0-preview2
   name: TodoApp
   properties:  
     services:
@@ -9,10 +9,7 @@ application:
           osType: Linux
           codePackages:
            - name: TodoAppSvcCodePackage
-             image: rapatchi/todoapplinux:5.1
-             reliableCollectionsRefs:
-              - name: TestReliableCollections
-                doNotPersistState: True
+             image: rapatchi/todoapplinux:13.0
              endpoints:
                 - name: TodoAppSvcListener
                   port: 8080
@@ -20,6 +17,12 @@ application:
                 requests:
                   cpu: 0.5
                   memoryInGB: 2.0
-          replicaCount: 1
+             reliableCollectionsRefs:
+              - name: TestReliableCollections
+                doNotPersistState: True
+             environmentVariables:
+               - name: Fabric_PartitionCount
+                 value: 2
+          replicaCount: 2
           networkRefs:
             - name: TodoAppNetwork

@@ -1,0 +1,94 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "defaultValue": "SouthCentralUS",
+      "type": "String",
+      "metadata": {
+        "description": "Location of the resources."
+      }
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2018-09-01-preview",
+      "name": "TodoApp",
+      "type": "Microsoft.ServiceFabricMesh/applications",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "Microsoft.ServiceFabricMesh/networks/TodoAppNetwork"
+      ],
+      "properties": {
+        "services": [
+          {
+            "name": "TodoAppSvc",
+            "properties": {
+              "description": "This service has no description",
+              "osType": "Linux",
+              "codePackages": [
+                {
+                  "name": "TodoAppSvcCodePackage",
+                  "image": "rapatchi/todoapplinux:13.0",
+                  "endpoints": [
+                    {
+                      "name": "TodoAppSvcListener",
+                      "port": 8080
+                    }
+                  ],
+                  "resources": {
+                    "requests": {
+                      "cpu": 0.5,
+                      "memoryInGB": 2.0
+                    }
+                  },
+                  "reliableCollectionsRefs": [
+                    {
+                      "name": "TestReliableCollections",
+                      "doNotPersistState": true
+                    }
+                  ],
+                  "environmentVariables": [
+                    {
+                      "name": "Fabric_PartitionCount",
+                      "value": "2"
+                    }
+                  ]
+                }
+              ],
+              "replicaCount": 2,
+              "networkRefs": [
+                {
+                  "name": "[resourceId('Microsoft.ServiceFabricMesh/networks', 'TodoAppNetwork')]"
+                }
+              ]
+            }
+          }
+        ],
+        "description": "This application has no description"
+      }
+    },
+    {
+      "apiVersion": "2018-09-01-preview",
+      "name": "TodoAppNetwork",
+      "type": "Microsoft.ServiceFabricMesh/networks",
+      "location": "[parameters('location')]",
+      "dependsOn": [],
+      "properties": {
+        "description": "This network has no description",
+        "addressPrefix": "10.0.0.4/22",
+        "ingressConfig": {
+          "layer4": [
+            {
+              "name": "TodoAppSvcListener",
+              "publicPort": "8080",
+              "applicationName": "TodoApp",
+              "serviceName": "TodoAppSvc",
+              "endpointName": "TodoAppSvcListener"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 1. mvn sf-mesh:init -DapplicationName=TodoApp
-2. mvn sf-mesh:addservice -DapplicationName=TodoApp -DserviceName=TodoAppSvc -DimageName=rapatchi/todoapplinux:6.6 -DlistenerPort=8080 -DnetworkRef=TodoAppNetwork -DmemoryUsage=2.0
+2. mvn sf-mesh:addservice -DapplicationName=TodoApp -DserviceName=TodoAppSvc -DimageName=rapatchi/todoapplinux:12 -DlistenerPort=8080 -DnetworkRef=TodoAppNetwork -DmemoryUsage=2.0
 3. mvn sf-mesh:addnetwork -DapplicationName=TodoApp -DserviceName=TodoAppSvc -DingressPort=8080 -DnetworkRef=TodoAppNetwork -DlistenerName=TodoAppSvcListener
 
 4. Add the following content in code packages section of service.yaml.:
@@ -15,5 +15,5 @@ Add the following in to code packages section of service.yaml.
                   value: 2
         The value of Fabric_PartitionCount should be equal with the replica count you mention
 
-5. mvn sf-mesh:deploy -DdeploymentType=cloud -DresourceGroup=rapatchimeshtestfinal -Dlocation=eastus (Note only eastus should be used for rc apps)
-6. mvn sf-mesh:remove -DdeploymentType=cloud -DresourceGroup=rapatchimeshtestfinal -DapplicationName=TodoApp -DdeleteResourceGroup=true
+5. mvn sf-mesh:deploy -DdeploymentType=cloud -DresourceGroup=rapatchidemo -Dlocation=eastus (Note only eastus should be used for rc apps)
+6. mvn sf-mesh:remove -DdeploymentType=cloud -DresourceGroup=rapatchidemo -DapplicationName=TodoApp -DdeleteResourceGroup=false
